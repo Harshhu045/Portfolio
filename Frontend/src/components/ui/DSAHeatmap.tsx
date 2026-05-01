@@ -13,7 +13,7 @@ export default function DSAHeatmap() {
 const [heatmapData, setHeatmapData] = useState<HeatmapData[]>([])
 
 useEffect(() => {
-  fetch("http://localhost:3001/api/leetcode/harsh_hu")
+  fetch(`${import.meta.env.VITE_API_URL}/api/leetcode/harsh_hu`)
     .then(res => res.json())
     .then(data => {
       const calendar = data.submissionCalendar || {}
