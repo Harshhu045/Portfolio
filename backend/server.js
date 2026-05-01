@@ -12,7 +12,8 @@ const app = express()
 app.use(cors({
     origin: [
         "http://localhost:5173",
-        "https://portfolio-bice-chi-64.vercel.app"
+        "https://portfolio-bice-chi-64.vercel.app",
+        "https://portfolio-iq31fbabe-harshhu045s-projects.vercel.app"
     ]
 }))
 app.use(express.json())
