@@ -43,7 +43,7 @@ export default function DSASection() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch("http://localhost:3001/api/leetcode/harsh_hu")
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/leetcode/harsh_hu`)
                 const data = await res.json()
                 setLeetcodeData(data)
             } catch (err) {

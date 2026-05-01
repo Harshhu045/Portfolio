@@ -128,7 +128,7 @@ const CoffeeSection: FC<Props> = ({
                                 onMouseLeave={leaveCursor}
                                 onClick={async () => {
                                     try {
-                                        const res = await fetch("http://localhost:3001/api/create-order", {
+                                        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/create-order`, {
                                             method: "POST",
                                             headers: {
                                                 "Content-Type": "application/json",
