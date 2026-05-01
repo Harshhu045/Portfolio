@@ -76,7 +76,7 @@ app.post("/api/contact", async (req, res) => {
 
 const razorpay = new Razorpay({
   key_id:process.env.KEY_ID,
-  key_secret:process.nextTick.KEY_SECRET
+  key_secret:process.env.KEY_SECRET
 })
 
 app.post("/api/create-order", async (req, res) => {
