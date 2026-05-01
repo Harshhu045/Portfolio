@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+.color-empty {
+  fill: #161b22;
+}
+
+.color-github-1 {
+  fill: #0e4429;
+}
+
+.color-github-2 {
+  fill: #006d32;
+}
+
+.color-github-3 {
+  fill: #26a641;
+}
+
+.color-github-4 {
+  fill: #39d353;
+}
+
+.react-calendar-heatmap rect {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.react-calendar-heatmap rect:hover {
+  transform: scale(1.2);
+  opacity: 1;
+}
+
+.shadow-request {
+  box-shadow: 
+    0 0 15px rgba(255,255,255,0.9),
+    0 0 30px rgba(255,255,255,0.4),
+    0 0 60px rgba(255,255,255,0.2);
+}
+
+@import "tailwindcss";
+
+@theme {
+  --animate-marquee: marquee 18s linear infinite;
+  --animate-pulse-dot: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(74,222,128,.4);
+  }
+  50% {
+    opacity: .8;
+    box-shadow: 0 0 0 6px rgba(74,222,128,0);
+  }
+}
