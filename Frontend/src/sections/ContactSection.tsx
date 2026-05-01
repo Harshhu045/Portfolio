@@ -32,7 +32,7 @@ export default function ContactSection() {
   }
 
   // ---------------- FORM 3D ----------------
-  const formRef = useRef<HTMLDivElement>(null)
+  const formRef = useRef<HTMLDivElement | null>(null)
 
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -88,7 +88,7 @@ const rotateY = useSpring(
   if (!name || !email || !message) return
 
   try {
-    const res = await fetch("http://localhost:3001/api/contact", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

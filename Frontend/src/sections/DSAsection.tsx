@@ -28,7 +28,7 @@ const TOPICS = [
     { name: "Heaps & Priority Q", solved: 14, total: 20, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" },
     { name: "Greedy", solved: 16, total: 22, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" },
     { name: "Bit Manipulation", solved: 12, total: 18, difficulty: "Hard", color: "bg-rose-400", accentRgb: "251,113,133" },
-]
+] as const;
 
 // ─── MAIN ──────────────────────────────────────────────────────────────────────
 
