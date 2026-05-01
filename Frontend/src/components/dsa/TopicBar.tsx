@@ -48,7 +48,7 @@ const TopicBar: FC<{ topic: Topic; index: number }> = ({ topic, index }) => {
                 </span>
             </div>
 
-            <div className="relative h-1 rounded-full bg-white/[0.06] overflow-hidden">
+            <div className="relative h-1 rounded-full bg-white/6 overflow-hidden">
                 <motion.div
                     initial={{ scaleX: 0 }}
                     animate={inView ? { scaleX: 1 } : { scaleX: 0 }}

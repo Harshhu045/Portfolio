@@ -146,7 +146,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, idx }) => {
                             ))}
                         </div>
 
-                        <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
+                        <div className="flex items-center justify-between pt-3 border-t border-white/6">
                             <span className="text-white/25 text-[10px] font-mono">{project.role}</span>
                             <span className="text-white/20 text-[10px] font-mono">{project.year}</span>
                         </div>

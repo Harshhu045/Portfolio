@@ -48,7 +48,7 @@ const StatCounter: FC<{ stat: Stat; delay: number }> = ({ stat, delay }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: delay / 1000, ease: [0.16, 1, 0.3, 1] }}
-            className="relative rounded-2xl border border-white/[0.07] bg-white/[0.02]
+            className="relative rounded-2xl border border-white/[0.07] bg-white/2
                        backdrop-blur-sm p-5 overflow-hidden cursor-default
                        transition-all duration-300"
             style={{

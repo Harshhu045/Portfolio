@@ -26,10 +26,10 @@ const JourneyTimeline: FC = () => {
 
     return (
         <div ref={ref} className="relative py-8">
-            <div className="absolute top-1/2 left-0 right-0 h-px bg-white/[0.08] -translate-y-1/2" />
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-white/8 -translate-y-1/2" />
             <motion.div
                 style={{ width: lineWidth }}
-                className="absolute top-1/2 left-0 h-px -translate-y-1/2 bg-gradient-to-r from-white/60 via-white/30 to-transparent"
+                className="absolute top-1/2 left-0 h-px -translate-y-1/2 bg-linear-to-r from-white/60 via-white/30 to-transparent"
             />
 
             <div className="relative flex justify-between">

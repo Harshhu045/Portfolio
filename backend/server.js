@@ -10,11 +10,18 @@ dotenv.config()
 const app = express()
 
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://portfolio-bice-chi-64.vercel.app",
-        "https://portfolio-iq31fbabe-harshhu045s-projects.vercel.app"
-    ]
+    origin: (origin, callback) => {
+        const allowed = [
+            "http://localhost:5173",
+            "https://portfolio-bice-chi-64.vercel.app",
+        ]
+        // Allow all Vercel preview deployments
+        if (!origin || allowed.includes(origin) || origin.endsWith(".vercel.app")) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    }
 }))
 app.use(express.json())
 
@@ -71,8 +78,9 @@ app.post("/api/contact", async (req, res) => {
 
     res.json({ success: true })
   } catch (err) {
-    res.status(500).json({ error: "Email failed" })
-  }
+    console.error("Email error:", err.message)  // ← add this
+    res.status(500).json({ error: "Email failed", detail: err.message })
+}
 })
 
 const razorpay = new Razorpay({
