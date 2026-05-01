@@ -9,7 +9,12 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://portfolio-bice-chi-64.vercel.app"
+    ]
+}))
 app.use(express.json())
 
 app.get("/api/leetcode/:username", async (req, res) => {
