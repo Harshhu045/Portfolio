@@ -21,6 +21,18 @@ app.use(cors({
 
 app.use(express.json())
 
+// ─── TRANSPORTER (one, at top) ─────────────────────────────
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+    family: 4
+})
+
 // ─── LEETCODE ──────────────────────────────────────────────
 app.get("/api/leetcode/:username", async (req, res) => {
     const { username } = req.params
@@ -44,14 +56,6 @@ app.post("/api/contact", async (req, res) => {
     }
 
     try {
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-        })
-
         await transporter.sendMail({
             from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
             to: process.env.EMAIL_USER,
