@@ -11,100 +11,91 @@ const app = express()
 
 app.use(cors({
     origin: (origin, callback) => {
-        const allowed = [
-            "http://localhost:5173",
-            "https://portfolio-bice-chi-64.vercel.app",
-        ]
-        // Allow all Vercel preview deployments
-        if (!origin || allowed.includes(origin) || origin.endsWith(".vercel.app")) {
+        if (!origin || origin.endsWith(".vercel.app") || origin === "http://localhost:5173") {
             callback(null, true)
         } else {
             callback(new Error("Not allowed by CORS"))
         }
     }
 }))
+
 app.use(express.json())
 
+// ─── LEETCODE ──────────────────────────────────────────────
 app.get("/api/leetcode/:username", async (req, res) => {
-
-  const { username } = req.params
-
-  try {
-
-    const response = await fetch(
-      `https://leetcode-api-faisalshohag.vercel.app/${username}`
-    )
-
-    const data = await response.json()
-
-    res.json(data)
-
-  } catch (error) {
-
-    res.status(500).json({ error: "Failed to fetch LeetCode data" })
-
-  }
-
+    const { username } = req.params
+    try {
+        const response = await fetch(
+            `https://leetcode-api-faisalshohag.vercel.app/${username}`
+        )
+        const data = await response.json()
+        res.json(data)
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch LeetCode data" })
+    }
 })
 
+// ─── CONTACT ───────────────────────────────────────────────
 app.post("/api/contact", async (req, res) => {
-  const { name, email, message, intent } = req.body
+    const { name, email, message, intent } = req.body
 
-  if (!name || !email || !message) {
-    return res.status(400).json({ error: "All fields required" })
-  }
+    if (!name || !email || !message) {
+        return res.status(400).json({ error: "All fields required" })
+    }
 
-  try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, // NOT your real password
-      },
-    })
+    try {
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        })
 
-    await transporter.sendMail({
-      from: `"Portfolio Contact" <sanuu9470@gmail.com>`,
-      to: "sanuu9470@gmail.com",
-      subject: `New Message from ${name}`,
-      html: `
-        <h3>New Contact Message</h3>
-        <p><b>Name:</b> ${name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Intent:</b> ${intent}</p>
-        <p><b>Message:</b><br/>${message}</p>
-      `,
-    })
+        await transporter.sendMail({
+            from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_USER,
+            subject: `New Message from ${name}`,
+            html: `
+                <h3>New Contact Message</h3>
+                <p><b>Name:</b> ${name}</p>
+                <p><b>Email:</b> ${email}</p>
+                <p><b>Intent:</b> ${intent}</p>
+                <p><b>Message:</b><br/>${message}</p>
+            `,
+        })
 
-    res.json({ success: true })
-  } catch (err) {
-    console.error("Email error:", err.message)  // ← add this
-    res.status(500).json({ error: "Email failed", detail: err.message })
-}
+        res.json({ success: true })
+    } catch (err) {
+        console.error("Email error:", err.message)
+        res.status(500).json({ error: "Email failed", detail: err.message })
+    }
 })
 
-const razorpay = new Razorpay({
-  key_id:process.env.KEY_ID,
-  key_secret:process.env.KEY_SECRET
-})
-
+// ─── RAZORPAY ──────────────────────────────────────────────
 app.post("/api/create-order", async (req, res) => {
-  const { amount } = req.body
+    const { amount } = req.body
 
-  try {
-    const order = await razorpay.orders.create({
-      amount: amount * 100, // ₹ → paise
-      currency: "INR",
-      receipt: "coffee_order",
-    })
+    try {
+        const razorpay = new Razorpay({
+            key_id: process.env.KEY_ID,
+            key_secret: process.env.KEY_SECRET,
+        })
 
-    res.json(order)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: "Order failed" })
-  }
+        const order = await razorpay.orders.create({
+            amount: amount * 100,
+            currency: "INR",
+            receipt: "coffee_order",
+        })
+
+        res.json(order)
+    } catch (err) {
+        console.error("Razorpay error:", err.message)
+        res.status(500).json({ error: "Order failed", detail: err.message })
+    }
 })
 
+// ─── START ─────────────────────────────────────────────────
 app.listen(3001, () => {
-  console.log("Server running on http://localhost:3001")
+    console.log("Server running on http://localhost:3001")
 })
