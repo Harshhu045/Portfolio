@@ -4,10 +4,12 @@ import cors from "cors"
 import nodemailer from "nodemailer"
 import dotenv from "dotenv"
 import Razorpay from "razorpay"
+import { Resend } from "resend"
 
 dotenv.config()
 
 const app = express()
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -56,8 +58,8 @@ app.post("/api/contact", async (req, res) => {
     }
 
     try {
-        await transporter.sendMail({
-            from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+        await resend.emails.send({
+            from: "Portfolio <onboarding@resend.dev>",
             to: process.env.EMAIL_USER,
             subject: `New Message from ${name}`,
             html: `
