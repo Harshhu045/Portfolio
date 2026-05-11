@@ -16,18 +16,16 @@ import { motion, useScroll, useTransform } from "framer-motion"
 // ─── STATIC TOPICS (kept same) ───────────────────────────────────────────────
 
 const TOPICS = [
-    { name: "Arrays & Hashing", solved: 48, total: 55, difficulty: "Easy", color: "bg-emerald-400", accentRgb: "52,211,153" },
+    { name: "Arrays & Hashing", solved: 48, total: 55, difficulty: "Medium", color: "bg-emerald-400", accentRgb: "52,211,153" },
     { name: "Two Pointers", solved: 22, total: 25, difficulty: "Easy", color: "bg-emerald-400", accentRgb: "52,211,153" },
     { name: "Sliding Window", solved: 19, total: 22, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" },
     { name: "Binary Search", solved: 24, total: 28, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" },
     { name: "Linked Lists", solved: 20, total: 23, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" },
-    { name: "Trees & BST", solved: 38, total: 48, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" },
-    { name: "Graphs", solved: 32, total: 45, difficulty: "Hard", color: "bg-rose-400", accentRgb: "251,113,133" },
-    { name: "Dynamic Programming", solved: 41, total: 62, difficulty: "Hard", color: "bg-rose-400", accentRgb: "251,113,133" },
+    { name: "Trees & BST", solved: 30, total: 48, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" },
+    { name: "Graphs", solved: 32, total: 45, difficulty: "Medium", color: "bg-rose-400", accentRgb: "251,113,133" },
+    { name: "Dynamic Programming", solved: 18, total: 62, difficulty: "Medium", color: "bg-rose-400", accentRgb: "251,113,133" },
     { name: "Backtracking", solved: 18, total: 25, difficulty: "Hard", color: "bg-rose-400", accentRgb: "251,113,133" },
-    { name: "Heaps & Priority Q", solved: 14, total: 20, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" },
-    { name: "Greedy", solved: 16, total: 22, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" },
-    { name: "Bit Manipulation", solved: 12, total: 18, difficulty: "Hard", color: "bg-rose-400", accentRgb: "251,113,133" },
+    { name: "Greedy", solved: 16, total: 22, difficulty: "Medium", color: "bg-sky-400", accentRgb: "56,189,248" }
 ] as const;
 
 // ─── MAIN ──────────────────────────────────────────────────────────────────────
@@ -76,9 +74,9 @@ export default function DSASection() {
                   accentRgb: "56,189,248",
               },
               {
-              value: 90, // 🔥 manually tracked
+              value: 60, // 🔥 manually tracked
               suffix: "d",
-              label: "Daily Streak",
+              label: "Max Streak",
               sublabel: "consistent practice",
               color: "text-amber-400",
               accentRgb: "251,191,36",

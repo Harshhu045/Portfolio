@@ -52,7 +52,7 @@ export default function App() {
       {entered && (
         <>
           <CursorSpotlight/>
-          <Navbar visible={showNavbar} />
+          {/* <Navbar visible={showNavbar} /> */}
 
           <div ref={dsaRef}>
             <DSASection />

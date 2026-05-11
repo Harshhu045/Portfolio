@@ -16,20 +16,27 @@ import { ACCENT } from "../constant/landing.constants"
 interface TrailDot { id: number; x: number; y: number }
 
 export const CustomCursor: FC = () => {
-    const mx = useMotionValue(-200)
-    const my = useMotionValue(-200)
+    const mx = useMotionValue(-2000)
+    const my = useMotionValue(-2000)
     const sx = useSpring(mx, { stiffness: 500, damping: 40 })
     const sy = useSpring(my, { stiffness: 500, damping: 40 })
     const lx = useSpring(mx, { stiffness: 100, damping: 22 })
     const ly = useSpring(my, { stiffness: 100, damping: 22 })
     const [hovered, setHovered] = useState(false)
     const [trail,   setTrail  ] = useState<TrailDot[]>([])
+    const [visible, setVisible] = useState(false)   // hide until first real move
     const counter = useRef(0)
 
     useEffect(() => {
         let last = { x: -999, y: -999 }
+
         const move = (e: MouseEvent) => {
-            mx.set(e.clientX); my.set(e.clientY)
+            // Only activate on non-touch mouse moves
+            if (window.innerWidth < 768) return
+
+            mx.set(e.clientX)
+            my.set(e.clientY)
+            setVisible(true)
 
             // Add trail dot only if moved enough
             const dx = e.clientX - last.x
@@ -41,20 +48,39 @@ export const CustomCursor: FC = () => {
                 setTimeout(() => setTrail(t => t.filter(p => p.id !== id)), 500)
             }
         }
+
         const over = (e: MouseEvent) => {
+            if (window.innerWidth < 768) return
             const el = e.target as HTMLElement
             setHovered(!!el.closest("button,a,[data-cursor]"))
         }
+
+        // Hide cursor when mouse leaves the window
+        const leave = () => {
+            setVisible(false)
+            setTrail([])
+            mx.set(-2000)
+            my.set(-2000)
+        }
+
         window.addEventListener("mousemove", move)
         window.addEventListener("mouseover", over)
+        document.documentElement.addEventListener("mouseleave", leave)
+
         return () => {
             window.removeEventListener("mousemove", move)
             window.removeEventListener("mouseover", over)
+            document.documentElement.removeEventListener("mouseleave", leave)
         }
     }, [mx, my])
 
+    // Never render on touch devices at all
+    if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
+        return null
+    }
+
     return (
-        <>
+        <div style={{ opacity: visible ? 1 : 0, transition: "opacity 0.2s" }}>
             {/* Trail dots */}
             {trail.map((p, i) => (
                 <div
@@ -69,6 +95,7 @@ export const CustomCursor: FC = () => {
                     }}
                 />
             ))}
+
             {/* Lag ring */}
             <motion.div
                 className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-full"
@@ -81,6 +108,7 @@ export const CustomCursor: FC = () => {
                     transition: "border-color 0.2s, scale 0.25s",
                 }}
             />
+
             {/* Dot */}
             <motion.div
                 className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full"
@@ -93,6 +121,6 @@ export const CustomCursor: FC = () => {
                     transition: "scale 0.2s",
                 }}
             />
-        </>
+        </div>
     )
 }

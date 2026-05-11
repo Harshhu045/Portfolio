@@ -130,7 +130,7 @@ const ContactLeft: FC<Props> = ({ hoverCursor, leaveCursor }) => {
                 <div className="flex items-center gap-6 border-t border-white/5 pt-6">
                     {[
                         { label: "GitHub", href: "https://github.com/Harshhu045", user: "@Harshhu045" },
-                        { label: "LinkedIn", href: "https://linkedin.com", user: "/in/username" },
+                        { label: "LinkedIn", href: "https://www.linkedin.com/in/harshupadhyayhu", user: "/in/harshupadhyayhu"},
                         { label: "Email", href: "mailto:upadhyayh886@gmail.com", user: "upadhyayh886@gmail.com" },
                     ].map((l) => (
                         <a

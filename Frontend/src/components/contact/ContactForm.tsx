@@ -140,7 +140,6 @@ const ContactForm: FC<Props> = ({
                                                     onMouseLeave={leaveCursor}
                                                     className="peer w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3.5 text-[15px] text-white placeholder:text-white/25 outline-none backdrop-blur-xl transition-all focus:border-violet-400/50 focus:bg-black/30 focus:ring-4 focus:ring-violet-500/10"
                                                 />
-
                                                 <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-white/10 transition-opacity peer-focus:opacity-100" />
                                             </div>
                                         </div>
@@ -168,17 +167,81 @@ const ContactForm: FC<Props> = ({
 
                                 {/* submit */}
                                 <div className="pt-2">
-                                    <button
+                                    <motion.button
                                         type="button"
                                         onClick={handleSubmit}
                                         onMouseEnter={hoverCursor}
                                         onMouseLeave={leaveCursor}
                                         className="group relative w-full overflow-hidden rounded-2xl border border-white/15 bg-white/5 p-px"
+                                        whileHover="hover"
+                                        whileTap="tap"
+                                        initial="idle"
                                     >
-                                        <div className="flex justify-between px-5 py-4">
-                                            Send message
-                                        </div>
-                                    </button>
+                                        {/* animated gradient border on hover */}
+                                        <motion.div
+                                            className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                            style={{
+                                                background: "linear-gradient(120deg, rgba(139,92,246,0.4), rgba(56,189,248,0.4), rgba(139,92,246,0.4))",
+                                                backgroundSize: "200% 200%",
+                                            }}
+                                            animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                                            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                                        />
+
+                                        {/* shimmer sweep */}
+                                        <motion.div
+                                            className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-white/10"
+                                            variants={{
+                                                idle: { translateX: "-100%" },
+                                                hover: { translateX: "200%", transition: { duration: 0.6, ease: "easeInOut" } },
+                                            }}
+                                        />
+
+                                        {/* inner surface */}
+                                        <motion.div
+                                            className="relative flex items-center justify-between rounded-[14px] bg-black/30 px-5 py-4 backdrop-blur-sm"
+                                            variants={{
+                                                idle: { backgroundColor: "rgba(0,0,0,0.3)" },
+                                                hover: { backgroundColor: "rgba(0,0,0,0.5)" },
+                                                tap: { scale: 0.98 },
+                                            }}
+                                        >
+                                            <motion.span
+                                                className="text-[14px] font-medium tracking-wide text-white/80 group-hover:text-white transition-colors duration-300"
+                                                variants={{
+                                                    idle: { x: 0 },
+                                                    hover: { x: -4 },
+                                                }}
+                                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                            >
+                                                Send message
+                                            </motion.span>
+
+                                            {/* arrow that slides in */}
+                                            <div className="relative flex items-center overflow-hidden">
+                                                <motion.span
+                                                    className="absolute text-white/0 group-hover:text-white/80 transition-colors duration-300"
+                                                    variants={{
+                                                        idle: { x: -16, opacity: 0 },
+                                                        hover: { x: 0, opacity: 1 },
+                                                    }}
+                                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                                >
+                                                    →
+                                                </motion.span>
+                                                <motion.span
+                                                    className="text-white/40"
+                                                    variants={{
+                                                        idle: { x: 0, opacity: 1 },
+                                                        hover: { x: 16, opacity: 0 },
+                                                    }}
+                                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                                >
+                                                    ↗
+                                                </motion.span>
+                                            </div>
+                                        </motion.div>
+                                    </motion.button>
                                 </div>
 
                             </motion.div>
